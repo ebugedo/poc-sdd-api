@@ -2,21 +2,21 @@
 
 ## Why
 
-Sistema actual necesita gestión integrada de clientes, proyectos y sectores. No existe una solución unificada que coordene estos tres dominios empresariales de manera coherente.
+The system needs integrated management of clients, projects, and sectors. There is no unified solution that coordinates these three business domains coherently.
 
 ## What Changes
 
-- Nueva capacidad de gestión de clientes
-- Nueva capacidad de gestión de proyectos  
-- Nueva capacidad de gestión de sectores
+- New client management capability
+- New project management capability
+- New sector management capability
 
 ## Capabilities
 
 ### New Capabilities
 
-- `clientes`: Capability for managing clients, including creation, consultation, and tracking of client relationships
-- `proyectos`: Capability for managing projects, including project creation, assignment to clients, and progress tracking
-- `sectores`: Capability for managing sectors, including sector categorization and sector-client-project relationships
+- `clients`: Capability for managing clients, including creation, consultation, and tracking of client relationships
+- `projects`: Capability for managing projects, including project creation, assignment to clients, and progress tracking
+- `sectors`: Capability for managing sectors, including sector categorization and sector-client-project relationships
 
 ### Modified Capabilities
 
@@ -24,7 +24,7 @@ Sistema actual necesita gestión integrada de clientes, proyectos y sectores. No
 
 ## Impact
 
-- Nuevos módulos de API para CRUD de clientes, proyectos y sectores
-- Modelos de datos para clientes, proyectos y sectores con relaciones Many-to-Many
-- Endpoints de asociación entre clientes y proyectos, y entre proyectos y sectores
-- Posible impacto en bases de datos y esquemas existentes
+- New API modules for CRUD of clients, projects, and sectors
+- Data models for clients, projects, and sectors with Many-to-Many relationships
+- Association endpoints between clients and projects, and between projects and sectors
+- Possible impact on existing databases and schemas

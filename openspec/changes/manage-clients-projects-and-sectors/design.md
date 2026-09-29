@@ -2,45 +2,74 @@
 
 ## Context
 
-Sistema existente sin gestión integrada de clientes, proyectos y sectores. Se requiere diseñar la arquitectura para soportar estos tres dominios con relaciones Many-to-Many y APIs coherentes.
+Existing system without integrated management of clients, projects, and sectors. Designing the architecture using Domain-Driven Design (DDD) in C# is required to support these three domains with Many-to-Many relationships and consistent APIs.
 
-## Tecnologías
+## Technologies
 
-Las siguientes tecnologías serán utilizadas en el proyecto:
-- **DDD**: Domain-Driven Design para el modelado del dominio y límites acotados
-- **CQRS**: Separación de lecturas y escrituras mediante comandos y queries
-- **Autofac**: Inyección de dependencias para el ensamblaje de componentes
-- **Automapper**: Mapeo objeto-objeto entre capas y DTOs
-- **xUnit**: Framework de pruebas unitarias
-- **Moq**: Biblioteca de mocks para pruebas unitarias
-- **Blogus**: Biblioteca de utilidades internas del proyecto
+The following technologies will be used in the project:
+
+- **DDD**: Domain-Driven Design for domain modeling and bounded contexts
+- **CQRS**: Separation of reads and writes via commands and queries
+- **Autofac**: Dependency injection for component assembly
+- **Automapper**: Object-object mapping between layers and DTOs
+- **xUnit**: Unit testing framework
+- **Moq**: Mock library for unit tests
+- **Blogus**: Internal project utilities library
+
+## Project Structure (DDD)
+
+The solution will follow a layered DDD architecture with the following projects:
+
+- **Domain**: Contains aggregates, entities, value objects, and specific business domains. Does not depend on any other layer.
+- **Application**: Contains use cases, commands, queries, handlers, and application services. Depends only on Domain.
+- **Infrastructure**: Implementation of repositories, Entity Framework Core DbContext, external services, and other technical concerns. Depends on Domain and Application.
+- **Api**: ASP.NET Core Web API project that exposes endpoints. Depends exclusively on Application.
 
 ## Goals / Non-Goals
 
 **Goals:**
-- Implementar CRUD completo para clientes, proyectos y sectores
-- Establecer relaciones entre clientes y proyectos, y entre proyectos y sectores
-- Proporcionar API REST consistente para los tres dominios
+- Implement complete DDD architecture for clients, projects, and sectors
+- Clear separation of responsibilities between layers
+- Consistent REST API following REST conventions with `/api/v1/clientes`, `/api/v1/proyectos`, `/api/v1/sectores`
+- Testability using xUnit and Moq
 
 **Non-Goals:**
-- Migración de datos existentes (fuera de alcance actual)
-- Interfaz de usuario front-end (back-end only)
-- Reportes y analytics avanzados
+- Existing data migration (out of current scope)
+- Front-end user interface (back-end only)
+- Advanced reporting and analytics
 
 ## Decisions
 
-- **Arquitectura modular**: Cada dominio (cliente, proyecto, sector) tendrá su propio módulo con controladores y servicios separados
-- **API RESTful**: Endpoints seguirán convenciones REST con `/api/v1/clientes`, `/api/v1/proyectos`, `/api/v1/sectores`
-- **Base de datos relacional**: Usar tablas separadas con claves foráneas para relaciones Many-to-Many entre clientes-proyectos y proyectos-sectores
-- **Autenticación JWT**: Tokens de autorización para todas las APIs
+### DDD Architecture Decisions:
+
+- **Domain Layer**: Each domain (Client, Project, Sector) will be a separate class library with its aggregates, entities, and value objects. No references to infrastructure or APIs.
+- **Application Layer**: Use cases will be organized by domain (Commands, Queries, Handlers). Each handler implements a specific business operation.
+- **Infrastructure Layer**: Entity Framework Core for persistence, generic and specific repositories. OOP to relational table mapping configuration.
+- **API Layer**: Minimalist controllers that delegate all logic to the Application layer. Only responsible for HTTP validation and response formatting.
+
+### API Design Decisions:
+
+- **API Versioning**: Endpoints will use v1 version in the URL (`/api/v1/...`)
+- **Resource Naming**: Resources in plural (`clients`, `projects`, `sectors`)
+- **HTTP Methods**: Standard CRUD (GET, POST, PUT, DELETE)
+- **DTO Mapping**: AutoMapper to map between Domain entities and API DTOs
+
+### CQRS Decisions:
+
+- **Commands**: Write operations (create, update, delete) that modify system state
+- **Queries**: Read operations that return data without modifying state
+- **MediatR**: Pattern for sending commands/queries and receiving handlers
 
 ## Risks / Trade-offs
 
-[Risk] Complejidad en las relaciones Many-to-Many podría causar problemas de integridad de datos
-[Mitigation] Implementar validación en capa de servicio y usar transacciones de base de datos
+[Risk] Additional complexity when separating multiple layers into distinct projects
+[Mitigation] Keep clear and minimal interfaces between layers; use automation to reduce repetitive code
 
-[Risk] Duplicación de lógica entre módulos
-[Mitigation] Crear capas de servicio base reutilizables
+[Risk] Learning curve for the team adopting DDD and CQRS patterns
+[Mitigation] Complete documentation and implementation examples; start with simple use cases
 
-[Risk] Performance con creciente número de relaciones
-[Mitigation] Indexar columnas de clave foránea y considerar caching para lecturas frecuentes
+[Risk] Over-engineering for a medium-sized project
+[Mitigation] Start with essentials and gradually add complexity as needed
+
+[Risk] Consistency between the domain model and the database
+[Mitigation] Use Entity Framework Core with strong configuration and integration tests
