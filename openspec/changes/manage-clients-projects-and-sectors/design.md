@@ -2,73 +2,74 @@
 
 ## Context
 
-Sistema existente sin gestión integrada de clientes, proyectos y sectores. Se requiere diseñar la arquitectura usando Domain-Driven Design (DDD) en C# para soportar estos tres dominios con relaciones Many-to-Many y APIs coherentes.
+Existing system without integrated management of clients, projects, and sectors. Designing the architecture using Domain-Driven Design (DDD) in C# is required to support these three domains with Many-to-Many relationships and consistent APIs.
 
-## Tecnologías
+## Technologies
 
-Las siguientes tecnologías serán utilizadas en el proyecto:
-- **DDD**: Domain-Driven Design para el modelado del dominio y límites acotados
-- **CQRS**: Separación de lecturas y escrituras mediante comandos y queries
-- **Autofac**: Inyección de dependencias para el ensamblaje de componentes
-- **Automapper**: Mapeo objeto-objeto entre capas y DTOs
-- **xUnit**: Framework de pruebas unitarias
-- **Moq**: Biblioteca de mocks para pruebas unitarias
-- **Blogus**: Biblioteca de utilidades internas del proyecto
+The following technologies will be used in the project:
+
+- **DDD**: Domain-Driven Design for domain modeling and bounded contexts
+- **CQRS**: Separation of reads and writes via commands and queries
+- **Autofac**: Dependency injection for component assembly
+- **Automapper**: Object-object mapping between layers and DTOs
+- **xUnit**: Unit testing framework
+- **Moq**: Mock library for unit tests
+- **Blogus**: Internal project utilities library
 
 ## Project Structure (DDD)
 
-La solución seguirá una arquitectura en capas DDD con los siguientes proyectos:
+The solution will follow a layered DDD architecture with the following projects:
 
-- **Domain**: Contiene los agregados, entidades, value objects y dominios específicos del negocio. No depende de ninguna otra capa.
-- **Application**: Contiene los casos de uso (use cases), comandos, queries, manejadores y servicios de aplicación. Depend de Domain únicamente.
-- **Infrastructure**: Implementación de repositorios, Entity Framework Core DbContext, servicios externos y otras preocupaciones técnicas. Depend de Domain y Application.
-- **Api**: Proyecto ASP.NET Core Web API que expone los endpoints. Depend de Application exclusivamente.
+- **Domain**: Contains aggregates, entities, value objects, and specific business domains. Does not depend on any other layer.
+- **Application**: Contains use cases, commands, queries, handlers, and application services. Depends only on Domain.
+- **Infrastructure**: Implementation of repositories, Entity Framework Core DbContext, external services, and other technical concerns. Depends on Domain and Application.
+- **Api**: ASP.NET Core Web API project that exposes endpoints. Depends exclusively on Application.
 
 ## Goals / Non-Goals
 
 **Goals:**
-- Implementar arquitectura DDD completa para clientes, proyectos y sectores
-- Separación clara de responsabilidades entre capas
-- API REST consistente siguiendo convenciones REST con `/api/v1/clientes`, `/api/v1/proyectos`, `/api/v1/sectores`
-- Testabilidad mediante xUnit y Moq
+- Implement complete DDD architecture for clients, projects, and sectors
+- Clear separation of responsibilities between layers
+- Consistent REST API following REST conventions with `/api/v1/clientes`, `/api/v1/proyectos`, `/api/v1/sectores`
+- Testability using xUnit and Moq
 
 **Non-Goals:**
-- Migración de datos existentes (fuera de alcance actual)
-- Interfaz de usuario front-end (back-end only)
-- Reportes y analytics avanzados
+- Existing data migration (out of current scope)
+- Front-end user interface (back-end only)
+- Advanced reporting and analytics
 
 ## Decisions
 
 ### DDD Architecture Decisions:
 
-- **Domain Layer**: Cada dominio (Cliente, Proyecto, Sector) será un proyecto/class library separado con sus agregados, entidades y value objects. Sin referencias a infraestructura o APIs.
-- **Application Layer**: Los casos de uso estarán organizados por dominio (Commands, Queries, Handlers). Cada handler implementa una operación específica del negocio.
-- **Infrastructure Layer**: Entity Framework Core para persistencia, repositorios genéricos y específicos. Configuración de mapeo OOP a tabla relacional.
-- **API Layer**: Controladores minimalistas que deleguen toda la lógica al Application layer. Solo responsable de validación HTTP y formateo de respuestas.
+- **Domain Layer**: Each domain (Client, Project, Sector) will be a separate class library with its aggregates, entities, and value objects. No references to infrastructure or APIs.
+- **Application Layer**: Use cases will be organized by domain (Commands, Queries, Handlers). Each handler implements a specific business operation.
+- **Infrastructure Layer**: Entity Framework Core for persistence, generic and specific repositories. OOP to relational table mapping configuration.
+- **API Layer**: Minimalist controllers that delegate all logic to the Application layer. Only responsible for HTTP validation and response formatting.
 
 ### API Design Decisions:
 
-- **API Versioning**: Los endpoints usarán versión v1 en la URL (`/api/v1/...`)
-- **Resource Naming**: Recursos en plural (`clientes`, `proyectos`, `sectores`)
-- **HTTP Methods**: CRUD estándar (GET, POST, PUT, DELETE)
-- **DTO Mapping**: AutoMapper para mapear entre entidades Domain y DTOs de API
+- **API Versioning**: Endpoints will use v1 version in the URL (`/api/v1/...`)
+- **Resource Naming**: Resources in plural (`clients`, `projects`, `sectors`)
+- **HTTP Methods**: Standard CRUD (GET, POST, PUT, DELETE)
+- **DTO Mapping**: AutoMapper to map between Domain entities and API DTOs
 
 ### CQRS Decisions:
 
-- **Commands**: Operaciones de escritura (crear, actualizar, eliminar) que modifican el estado del sistema
-- **Queries**: Operaciones de lectura que devuelven datos sin modificar el estado
-- **MediatR**: Patrón para enviar comandos/queries y recibir handlers
+- **Commands**: Write operations (create, update, delete) that modify system state
+- **Queries**: Read operations that return data without modifying state
+- **MediatR**: Pattern for sending commands/queries and receiving handlers
 
 ## Risks / Trade-offs
 
-[Risk] Complejidad adicional al separar múltiples capas en proyectos distintos
-[Mitigation] Mantener interfaces claras y mínimas entre capas; usar automatización para reducir código repetitivo
+[Risk] Additional complexity when separating multiple layers into distinct projects
+[Mitigation] Keep clear and minimal interfaces between layers; use automation to reduce repetitive code
 
-[Risk] Curva de aprendizaje para el equipo al adoptar patrones DDD y CQRS
-[Mitigation] Documentación completa y ejemplos de implementación; empezar con casos de uso simples
+[Risk] Learning curve for the team adopting DDD and CQRS patterns
+[Mitigation] Complete documentation and implementation examples; start with simple use cases
 
-[Risk] Over-engineering para un proyecto de tamaño mediano
-[Mitigation] Empezar con lo esencial y agregar complejidad gradualmente según sea necesario
+[Risk] Over-engineering for a medium-sized project
+[Mitigation] Start with essentials and gradually add complexity as needed
 
-[Risk] Consistencia entre el modelo domain y la base de datos
-[Mitigation] Usar Entity Framework Core con configuración fuerte y pruebas de integración
+[Risk] Consistency between the domain model and the database
+[Mitigation] Use Entity Framework Core with strong configuration and integration tests
