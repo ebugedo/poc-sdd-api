@@ -1,0 +1,57 @@
+## General
+.vs/
+.vscode/
+*.user
+*.userosscache
+*.sln.docstates
+
+## Build outputs (Archivos de compilación)
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+build/
+out/
+
+## NuGet
+*.nupkg
+*.snupkg
+*.nuget.props
+*.nuget.targets
+packages/
+project.lock.json
+project.assets.json
+
+## Testing / Test Results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+## User-specific files
+*.rsuser
+*.suo
+*.userlibraries
+*.cache
+*.exe
+*.dll
+!src/**/*.dll
+!lib/**/*.dll
+
+## Rider & JetBrains IDEs
+.idea/
+*.sln.iml
+
+## Publish outputs
+publish/
+*.azurePubxml
+*.pubxml
+
+## Local App Settings / Secrets
+appsettings.Development.json
+appsettings.Local.json
+*.secrets.json
+
+## Temp files
+[Tt]emp/
+*.tmp
