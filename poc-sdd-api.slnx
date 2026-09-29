@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Poc.SDD.Api/Poc.SDD.Api.csproj" />
+  <Project Path="Poc.SDD.Application/Poc.SDD.Application.csproj" />
+  <Project Path="Poc.SDD.Domain/Poc.SDD.Domain.csproj" />
+  <Project Path="Poc.SDD.Infrastructure/Poc.SDD.Infrastructure.csproj" />
+</Solution>
