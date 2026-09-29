@@ -34,10 +34,10 @@
 
 ## 5. API Layer
 
-- [ ] 5.1 Create ClientsController with CRUD endpoints (GET/POST/PUT/DELETE /api/v1/clientes)
-- [ ] 5.2 Create ProjectsController with CRUD endpoints (GET/POST/PUT/DELETE /api/v1/proyectos)
-- [ ] 5.3 Create SectorsController with CRUD and assignment endpoints (GET/POST /api/v1/sectores)
-- [ ] 5.4 Implement API versioning with v1 in URL
+- [x] 5.1 Create ClientsController with CRUD endpoints (GET/POST/PUT/DELETE /api/v1/clientes)
+- [x] 5.2 Create ProjectsController with CRUD endpoints (GET/POST/PUT/DELETE /api/v1/proyectos)
+- [x] 5.3 Create SectorsController with CRUD and assignment endpoints (GET/POST /api/v1/sectores)
+- [x] 5.4 Implement API versioning with v1 in URL
 
 ## 6. Dependency Injection
 
