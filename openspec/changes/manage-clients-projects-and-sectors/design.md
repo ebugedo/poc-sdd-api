@@ -4,6 +4,17 @@
 
 Sistema existente sin gestión integrada de clientes, proyectos y sectores. Se requiere diseñar la arquitectura para soportar estos tres dominios con relaciones Many-to-Many y APIs coherentes.
 
+## Tecnologías
+
+Las siguientes tecnologías serán utilizadas en el proyecto:
+- **DDD**: Domain-Driven Design para el modelado del dominio y límites acotados
+- **CQRS**: Separación de lecturas y escrituras mediante comandos y queries
+- **Autofac**: Inyección de dependencias para el ensamblaje de componentes
+- **Automapper**: Mapeo objeto-objeto entre capas y DTOs
+- **xUnit**: Framework de pruebas unitarias
+- **Moq**: Biblioteca de mocks para pruebas unitarias
+- **Blogus**: Biblioteca de utilidades internas del proyecto
+
 ## Goals / Non-Goals
 
 **Goals:**
