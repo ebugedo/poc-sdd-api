@@ -1,4 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using PocSddApi.Data;
+using PocSddApi.src.Data.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PocSddApi.src.Proyectos.Controllers;
 
@@ -6,38 +11,92 @@ namespace PocSddApi.src.Proyectos.Controllers;
 [Route("api/[controller]")]
 public class ProyectosController : ControllerBase
 {
+    private readonly PocSddApiContext _context;
+
+    public ProyectosController(PocSddApiContext context)
+    {
+        _context = context;
+    }
+
     // GET: api/proyectos
     [HttpGet]
-    public IActionResult Get()
+    public async Task<ActionResult<IEnumerable<Proyecto>>> GetProyectos()
     {
-        return Ok("Listado de proyectos");
+        return await _context.Proyectos.ToListAsync();
     }
 
     // GET: api/proyectos/5
     [HttpGet("5")]
-    public IActionResult GetById(int id)
+    public async Task<ActionResult<Proyecto>> GetProyecto(int id)
     {
-        return Ok($"Obteniendo proyecto con ID {id}");
-    }
+        var proyecto = await _context.Proyectos.FindAsync(id);
 
-    // POST: api/proyectos
-    [HttpPost]
-    public IActionResult Create([FromBody] string value)
-    {
-        return Ok($"Creando proyecto: {value}");
+        if (proyecto == null)
+        {
+            return NotFound();
+        }
+
+        return proyecto;
     }
 
     // PUT: api/proyectos/5
     [HttpPut("5")]
-    public IActionResult Update(int id, [FromBody] string value)
+    public async Task<IActionResult> PutProyecto(int id, Proyecto proyecto)
     {
-        return Ok($"Actualizando proyecto {id}: {value}");
+        if (id != proyecto.Id)
+        {
+            return BadRequest();
+        }
+
+        _context.Entry(proyecto).State = EntityState.Modified;
+
+        try
+        {
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!ProyectoExists(id))
+            {
+                return NotFound();
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        return NoContent();
+    }
+
+    // POST: api/proyectos
+    [HttpPost]
+    public async Task<ActionResult<Proyecto>> PostProyecto(Proyecto proyecto)
+    {
+        _context.Proyectos.Add(proyecto);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction("GetProyecto", new { id = proyecto.Id }, proyecto);
     }
 
     // DELETE: api/proyectos/5
     [HttpDelete("5")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> DeleteProyecto(int id)
     {
-        return Ok($"Eliminando proyecto {id}");
+        var proyecto = await _context.Proyectos.FindAsync(id);
+        if (proyecto == null)
+        {
+            return NotFound();
+        }
+
+        _context.Proyectos.Remove(proyecto);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
+
+    private bool ProyectoExists(int id)
+    {
+        return _context.Proyectos.Any(e => e.Id == id);
     }
 }
