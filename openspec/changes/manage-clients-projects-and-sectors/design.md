@@ -14,7 +14,7 @@ The following technologies will be used in the project:
 - **Automapper**: Object-object mapping between layers and DTOs
 - **xUnit**: Unit testing framework
 - **Moq**: Mock library for unit tests
-- **Blogus**: Internal project utilities library
+- **Blogus**: Internal project utilities library (used in unit and integration tests)
 
 ## Project Structure (DDD)
 

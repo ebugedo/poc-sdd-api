@@ -41,24 +41,24 @@
 
 ## 6. Dependency Injection
 
-- [x] 6.1 Register services with built-in DI
+- [x] 6.1 Register services with Autofac
 - [x] 6.2 Register MediatR
 - [x] 6.3 Configure EF Core DbContext
 
 ## 7. Unit Testing
 
-- [x] 7.1 Create Client unit tests with Moq
-- [x] 7.2 Create Project unit tests with Moq
-- [x] 7.3 Create Sector unit tests with Moq
-- [x] 7.4 Create command handler tests for all CRUD operations
-- [x] 7.5 Create query handler tests for all queries
+- [x] 7.1 Create Client unit tests with xUnit, Moq, and Blogus
+- [x] 7.2 Create Project unit tests with xUnit, Moq, and Blogus
+- [x] 7.3 Create Sector unit tests with xUnit, Moq, and Blogus
+- [x] 7.4 Create command handler tests for all CRUD operations with xUnit, Moq, and Blogus
+- [x] 7.5 Create query handler tests for all queries with xUnit, Moq, and Blogus
 
 ## 8. Integration Tests
 
-- [x] 8.1 Implement integration test suite for API endpoints
-- [x] 8.2 Test client creation, consultation, and update flow
-- [x] 8.3 Test project creation with client assignment
-- [x] 8.4 Test sector assignment to clients and projects
+- [x] 8.1 Implement integration test suite for API endpoints with xUnit, Moq, and Blogus
+- [x] 8.2 Test client creation, consultation, and update flow with xUnit, Moq, and Blogus
+- [x] 8.3 Test project creation with client assignment with xUnit, Moq, and Blogus
+- [x] 8.4 Test sector assignment to clients and projects with xUnit, Moq, and Blogus
 
 ## 9. Documentation
 
@@ -72,12 +72,12 @@
 - [x] 10.2 Run integration tests and verify flows
 - [x] 10.3 Build solution and verify no compilation errors
 
-## Reorganization & Implementation Tasks
+## 11. Reorganization & Implementation Tasks
 
-- [ ] **Move files to correct directory structure**:
-  - [ ] Create `src/` and `test/` directories if they do not exist.
-  - [ ] Move all source code from the project root into `src/`.
-  - [ ] Move all test files from the project root into `test/`.
-- [ ] **Update references and imports**:
-  - [ ] Fix import/require paths across all files in `src/` and `test/`.
-  - [ ] Adjust test runner configuration (e.g., `jest.config.js`, `vitest.config.js`, or equivalent) to look for tests within `test/`.
+- [ ] 11.1 **Move files to correct directory structure**:
+  - [ ] 11.1.1 Create `src/` and `test/` directories if they do not exist.
+  - [ ] 11.1.2 Move all source code from the project root into `src/`.
+  - [ ] 11.1.3 Move all test files from the project root into `test/`.
+- [ ] 11.2 **Update references and imports**:
+  - [ ] 11.2.1 Fix import/require paths across all files in `src/` and `test/`.
+  - [ ] 11.2.2 Adjust test runner configuration (e.g., `jest.config.js`, `vitest.config.js`, or equivalent) to look for tests within `test/`.
