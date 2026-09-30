@@ -73,3 +73,9 @@ The solution will follow a layered DDD architecture with the following projects:
 
 [Risk] Consistency between the domain model and the database
 [Mitigation] Use Entity Framework Core with strong configuration and integration tests
+
+## Project Structure & File Conventions
+
+- **Source Code**: All generated code, business logic, and project modules MUST be located exclusively under the `src/` directory.
+- **Tests**: All test files (unit, integration) MUST be located under the `test/` directory.
+- **Project Root**: Executable code and test files are not allowed directly in the project root directory.

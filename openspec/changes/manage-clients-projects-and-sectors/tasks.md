@@ -71,3 +71,13 @@
 - [x] 10.1 Run all unit tests and verify pass
 - [x] 10.2 Run integration tests and verify flows
 - [x] 10.3 Build solution and verify no compilation errors
+
+## Reorganization & Implementation Tasks
+
+- [ ] **Move files to correct directory structure**:
+  - [ ] Create `src/` and `test/` directories if they do not exist.
+  - [ ] Move all source code from the project root into `src/`.
+  - [ ] Move all test files from the project root into `test/`.
+- [ ] **Update references and imports**:
+  - [ ] Fix import/require paths across all files in `src/` and `test/`.
+  - [ ] Adjust test runner configuration (e.g., `jest.config.js`, `vitest.config.js`, or equivalent) to look for tests within `test/`.
