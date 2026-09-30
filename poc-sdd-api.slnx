@@ -1,4 +1,10 @@
 <Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/test/">
+    <Project Path="test/Poc.SDD.Api.Tests/Poc.SDD.Api.Tests.csproj" />
+    <Project Path="test/Poc.SDD.Application.Tests/Poc.SDD.Application.Tests.csproj" />
+    <Project Path="test/Poc.SDD.Domain.Tests/Poc.SDD.Domain.Tests.csproj" />
+  </Folder>
   <Project Path="src/Poc.SDD.Api/Poc.SDD.Api.csproj" />
   <Project Path="src/Poc.SDD.Application/Poc.SDD.Application.csproj" />
   <Project Path="src/Poc.SDD.Domain/Poc.SDD.Domain.csproj" />
