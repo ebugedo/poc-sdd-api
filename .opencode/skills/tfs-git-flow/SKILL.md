@@ -1,5 +1,5 @@
 ---
-name: git-flow
+name: tfs-git-flow
 description: Strictly executes the remote Git update workflow (Branch -> Commit -> Push -> PR)
 mode: all
 ---
