@@ -1,6 +1,6 @@
 ---
 name: tfs-openspec-validate
-description: Audits and verifies that C# (.NET / ASP.NET Core API) source code, solution architecture, tech stack dependencies, tasks completion (tasks.md), and test projects comply with OpenSpec specifications and design decisions (design.md).
+description: Audits and verifies that C# (.NET / ASP.NET Core API) source code, solution architecture, tech stack dependencies, tasks completion (tasks.md), and test projects comply with OpenSpec specifications and design decisions (design.md), capturing detailed test failure details if any occur.
 ---
 
 # Skill: /tfs-openspec-validate - C# ASP.NET Core API, Tasks, Tech Stack, Specs & Design Audit
@@ -44,12 +44,16 @@ Act as an **independent software auditor and .NET / C# QA specialist**. Your obj
    - Verify that design patterns defined in `design.md` (e.g., Clean Architecture, Vertical Slices, CQRS) are followed.
    - Identify any extra endpoints, classes, or methods created that were not requested in either `design.md` or `specs/` (over-engineering / spec drift).
 
-7. **Run .NET Tests (if terminal is accessible)**:
+7. **Run .NET Tests & Capture Failures (if terminal is accessible)**:
    - Execute in terminal:
      ```bash
-     dotnet test
+     dotnet test --logger "console;verbosity=normal"
      ```
-   - Verify that all projects compile clean and all unit/integration test suites pass green.
+   - Verify if all projects compile clean and all unit/integration test suites pass green.
+   - **If any tests or builds fail**:
+     - Extract the exact name of each failing test method and project.
+     - Capture the error messages, assertions, expected vs actual values, and relevant stack traces.
+     - Prepare a structured error block so the user can easily copy and pass it to OpenCode for remediation.
 
 8. **Generate Validation Report**:
    Respond in the chat formatted as follows:
@@ -57,7 +61,7 @@ Act as an **independent software auditor and .NET / C# QA specialist**. Your obj
    ---
    ### 📋 Specification & Design Verification Report (.NET / ASP.NET Core API)
 
-   **Overall Status:** [ 🟢 Compliant | 🟡 Incomplete | 🔴 Non-Compliant / Drifted ]
+   **Overall Status:** [ 🟢 Compliant | 🟡 Incomplete | 🔴 Non-Compliant / Drifted / Tests Failing ]
 
    #### 1. Tasks Completion Check (`tasks.md`)
    - [x] **Tasks Completion**: Confirmation that all tasks defined in `tasks.md` are completed (`[x]`) and verified in code.
@@ -85,6 +89,15 @@ Act as an **independent software auditor and .NET / C# QA specialist**. Your obj
    #### 7. Unrequested Code (Drift)
    - List any endpoints, classes, controllers, or packages added outside the specification or design scope.
 
-   #### 8. `dotnet test` Results
-   - Compilation and execution summary of test runs.
+   #### 8. `dotnet test` Results & Failures
+   - **Summary**: X passed, Y failed, Z skipped.
+   - **Detailed Failure Output** (If tests or build failed, format below for easy copy-paste to OpenCode):
+
+   ```text
+   ❌ FAILING TESTS / BUILD ERRORS DETAILS:
+
+   [Project/Suite Name] -> [TestClass.TestMethodName]
+   Error Message: [Captured error or assertion failure]
+   Stack Trace:
+   [Stack trace output]
    ---
