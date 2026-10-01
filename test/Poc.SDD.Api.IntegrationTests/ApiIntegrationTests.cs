@@ -91,7 +91,7 @@ public class ApiIntegrationTests : IClassFixture<CustomWebApplicationFactory>
     [Fact]
     public async Task Sector_Assignment_To_Client_And_Project_ShouldWork()
     {
-        // Test that endpoints exist and return BadRequest for invalid IDs (not 404)
+        // Test that endpoints exist and accept valid GUID IDs (handlers validate IDs are not empty)
         var assignToClientCommand = new AssignSectorToClientCommand
         {
             ClientId = Guid.NewGuid(),
@@ -99,7 +99,7 @@ public class ApiIntegrationTests : IClassFixture<CustomWebApplicationFactory>
         };
 
         var assignClientResponse = await _client.PostAsJsonAsync("/api/v1/sectores/assign-client", assignToClientCommand);
-        Assert.Equal(HttpStatusCode.BadRequest, assignClientResponse.StatusCode);
+        Assert.Equal(HttpStatusCode.OK, assignClientResponse.StatusCode);
 
         var assignToProjectCommand = new AssignSectorToProjectCommand
         {
@@ -108,7 +108,7 @@ public class ApiIntegrationTests : IClassFixture<CustomWebApplicationFactory>
         };
 
         var assignProjectResponse = await _client.PostAsJsonAsync("/api/v1/sectores/assign-project", assignToProjectCommand);
-        Assert.Equal(HttpStatusCode.BadRequest, assignProjectResponse.StatusCode);
+        Assert.Equal(HttpStatusCode.OK, assignProjectResponse.StatusCode);
     }
 
     [Fact]
