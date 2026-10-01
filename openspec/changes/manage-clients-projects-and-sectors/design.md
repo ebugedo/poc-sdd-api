@@ -14,7 +14,7 @@ The following technologies will be used in the project:
 - **Automapper**: Object-object mapping between layers and DTOs
 - **xUnit**: Unit testing framework
 - **Moq**: Mock library for unit tests
-- **Bogus:** An open-source .NET library used to generate realistic, fake test data for unit testing, integration testing, and database seeding.
+- **Bogus**: An open-source .NET library used to generate realistic, fake test data for unit testing, integration testing, and database seeding.
 
 ## Project Structure (DDD)
 

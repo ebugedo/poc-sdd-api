@@ -26,7 +26,14 @@ public class SectorsController : ControllerBase
     [HttpGet("{id:guid}")]
     public async Task<ActionResult> GetById(Guid id, CancellationToken cancellationToken = default)
     {
-        var result = Result.Success();
+        var result = await _mediator.Send(new GetSectorByIdQuery { Id = id }, cancellationToken);
+        return Ok(result);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> Create([FromBody] Poc.SDD.Application.Sectors.CreateSectorCommand command, CancellationToken cancellationToken = default)
+    {
+        var result = await _mediator.Send(command, cancellationToken);
         return Ok(result);
     }
 

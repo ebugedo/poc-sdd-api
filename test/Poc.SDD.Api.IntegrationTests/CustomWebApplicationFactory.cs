@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Autofac;
@@ -9,6 +11,7 @@ using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using MediatR;
 using System.Reflection;
+using System.Net.Http;
 using Poc.SDD.Api;
 
 namespace Poc.SDD.Api.Tests;
@@ -69,7 +72,12 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
                 webBuilder.ConfigureServices(services =>
                 {
                     services.AddEndpointsApiExplorer();
-                    services.AddApiVersioning();
+                    services.AddApiVersioning(options =>
+                    {
+                        options.ApiVersionReader = new HeaderApiVersionReader("api-version");
+                        options.AssumeDefaultVersionWhenUnspecified = true;
+                        options.DefaultApiVersion = new ApiVersion(1, 0);
+                    });
                     services.AddControllers()
                         .AddApplicationPart(typeof(Poc.SDD.Api.Controllers.V1.ClientsController).Assembly);
                 });
@@ -85,5 +93,11 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
             });
         
         return builder;
+    }
+
+    protected override void ConfigureClient(HttpClient client)
+    {
+        base.ConfigureClient(client);
+        client.DefaultRequestHeaders.Add("api-version", "1.0");
     }
 }

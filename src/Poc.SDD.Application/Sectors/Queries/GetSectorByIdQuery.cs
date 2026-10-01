@@ -1,0 +1,10 @@
+using MediatR;
+using Poc.SDD.Domain.Sectors;
+using Poc.SDD.Domain.Shared;
+
+namespace Poc.SDD.Application.Sectors.Queries;
+
+public class GetSectorByIdQuery : IRequest<Result>
+{
+    public Guid Id { get; set; }
+}
