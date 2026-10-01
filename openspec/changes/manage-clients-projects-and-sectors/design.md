@@ -14,7 +14,7 @@ The following technologies will be used in the project:
 - **Automapper**: Object-object mapping between layers and DTOs
 - **xUnit**: Unit testing framework
 - **Moq**: Mock library for unit tests
-- **Blogus**: Internal project utilities library (used in unit and integration tests)
+- **Bogus:** An open-source .NET library used to generate realistic, fake test data for unit testing, integration testing, and database seeding.
 
 ## Project Structure (DDD)
 
@@ -77,5 +77,7 @@ The solution will follow a layered DDD architecture with the following projects:
 ## Project Structure & File Conventions
 
 - **Source Code**: All generated code, business logic, and project modules MUST be located exclusively under the `src/` directory.
-- **Tests**: All test files (unit, integration) MUST be located under the `test/` directory.
+- **Tests**: All test files MUST be located under the `test/` directory.
+  - **Unit Tests**: Every code project MUST have a corresponding unit test project. The test project directory or module name MUST end with `.UnitTests`.
+  - **Integration Tests**: Every code project MUST have a corresponding integration test project. The test project directory or module name MUST end with `.IntegrationTests`.
 - **Project Root**: Executable code and test files are not allowed directly in the project root directory.

@@ -1,9 +1,11 @@
 <Solution>
   <Folder Name="/src/" />
   <Folder Name="/test/">
-    <Project Path="test/Poc.SDD.Api.Tests/Poc.SDD.Api.Tests.csproj" />
-    <Project Path="test/Poc.SDD.Application.Tests/Poc.SDD.Application.Tests.csproj" />
-    <Project Path="test/Poc.SDD.Domain.Tests/Poc.SDD.Domain.Tests.csproj" />
+    <Project Path="test/Poc.SDD.Api.IntegrationTests/Poc.SDD.Api.IntegrationTests.csproj" />
+    <Project Path="test/Poc.SDD.Application.UnitTests/Poc.SDD.Application.UnitTests.csproj" />
+    <Project Path="test/Poc.SDD.Application.IntegrationTests/Poc.SDD.Application.IntegrationTests.csproj" />
+    <Project Path="test/Poc.SDD.Domain.UnitTests/Poc.SDD.Domain.UnitTests.csproj" />
+    <Project Path="test/Poc.SDD.Domain.IntegrationTests/Poc.SDD.Domain.IntegrationTests.csproj" />
   </Folder>
   <Project Path="src/Poc.SDD.Api/Poc.SDD.Api.csproj" />
   <Project Path="src/Poc.SDD.Application/Poc.SDD.Application.csproj" />
