@@ -104,105 +104,105 @@
 
 ### Critical Fixes (Must Fix First)
 
-- [ ] **R1.1** Create `CreateSectorCommand` and `CreateSectorHandler` for sector creation
+- [x] **R1.1** Create `CreateSectorCommand` and `CreateSectorHandler` for sector creation
   - **Reason**: Spec requires "Sector can be created" but no command/handler exists
   - **Files**: Create `src/Poc.SDD.Application/Sectors/CreateSectorCommand.cs`, `CreateSectorHandler.cs`
   - **Validation**: POST `/api/v1/sectores` endpoint works
 
-- [ ] **R1.2** Create `CreateSectorHandler` with proper validation
+- [x] **R1.2** Create `CreateSectorHandler` with proper validation
   - **Reason**: Need handler to process sector creation command
   - **Files**: `src/Poc.SDD.Application/Sectors/CreateSectorHandler.cs`
 
-- [ ] **R1.3** Add POST `/api/v1/sectores` endpoint in `SectorsController`
+- [x] **R1.3** Add POST `/api/v1/sectores` endpoint in `SectorsController`
   - **Reason**: Spec requires "Sector can be created" endpoint
   - **Files**: Update `src/Poc.SDD.Api/Controllers/V1/SectorsController.cs`
 
-- [ ] **R1.4** Fix `SectorsController.GetById` to return actual sector data
+- [x] **R1.4** Fix `SectorsController.GetById` to return actual sector data
   - **Reason**: Currently returns `Result.Success()` instead of actual sector data
   - **Files**: `src/Poc.SDD.Api/Controllers/V1/SectorsController.cs`
 
 ### API Versioning Fixes (Critical - Tests Failing)
 
-- [ ] **R2.1** Add `api-version` header to test client in `CustomWebApplicationFactory`
+- [x] **R2.1** Add `api-version` header to test client in `CustomWebApplicationFactory`
   - **Reason**: 3/4 API integration tests fail with "ApiVersionUnspecified"
   - **Files**: `test/Poc.SDD.Api.IntegrationTests/CustomWebApplicationFactory.cs`
   - **Action**: Add `client.DefaultRequestHeaders.Add("api-version", "1.0")` in `CreateClient` method
 
-- [ ] **R2.2** Ensure API versioning is properly configured in test environment
+- [x] **R2.2** Ensure API versioning is properly configured in test environment
   - **Reason**: Tests fail with "ApiVersionUnspecified" error
   - **Files**: `test/Poc.SDD.Api.IntegrationTests/CustomWebApplicationFactory.cs`, `src/Poc.SDD.Api/Program.cs`
 
 ### Critical Infrastructure Fixes
 
-- [ ] **R3.1** Fix `Poc.SDD.Domain.IntegrationTests` project configuration
+- [x] **R3.1** Fix `Poc.SDD.Domain.IntegrationTests` project configuration
   - **Reason**: Build error "Solution root could not be located"
   - **Files**: `test/Poc.SDD.Domain.IntegrationTests/Poc.SDD.Domain.IntegrationTests.csproj`
   - **Action**: Add proper `<SolutionRoot>` or configure `WebApplicationFactory` correctly
 
-- [ ] **R3.2** Fix `Poc.SDD.Domain.IntegrationTests` project reference to Infrastructure
+- [x] **R3.2** Fix `Poc.SDD.Domain.IntegrationTests` project reference to Infrastructure
   - **Reason**: Needs reference to Infrastructure for EF Core InMemory database
   - **Files**: `test/Poc.SDD.Domain.IntegrationTests/Poc.SDD.Domain.IntegrationTests.csproj`
 
 ### Documentation & Typos Fixes
 
-- [ ] **R4.1** Fix "Blogus" typo to "Bogus" in design.md
+- [x] **R4.1** Fix "Blogus" typo to "Bogus" in design.md
   - **Reason**: Design.md says "Blogus" but Bogus is actually used
   - **Files**: `openspec/changes/manage-clients-projects-and-sectors/design.md` (line 17)
 
-- [ ] **R4.2** Fix "Blogus" typo in tasks.md
+- [x] **R4.2** Fix "Blogus" typo in tasks.md
   - **Reason**: Tasks reference "Blogus" but Bogus is used
   - **Files**: `openspec/changes/manage-clients-projects-and-sectors/tasks.md` (lines 50-54, 58-61)
 
 ### Package Version & Security Fixes
 
-- [ ] **R5.1** Fix MediatR version conflict
+- [x] **R5.1** Fix MediatR version conflict
   - **Issue**: MediatR 12.0.0 resolved but MediatR.Extensions.Microsoft.DependencyInjection 11.1.0 requires MediatR < 12.0.0
   - **Action**: Downgrade MediatR to 11.x or upgrade MediatR.Extensions.Microsoft.DependencyInjection
 
-- [ ] **R5.2** Update AutoMapper to fix vulnerability (GHSA-rvv3-g6hj-g44x)
+- [x] **R5.2** Update AutoMapper to fix vulnerability (GHSA-rvv3-g6hj-g44x)
   - **Issue**: AutoMapper 10.1.1 has known high severity vulnerability
   - **Action**: Upgrade AutoMapper to latest secure version
 
-- [ ] **R5.3** Update Microsoft.OpenApi to fix vulnerability
+- [x] **R5.3** Update Microsoft.OpenApi to fix vulnerability
   - **Issue**: Microsoft.OpenApi 3.1.1 has known vulnerability
   - **Action**: Upgrade to latest secure version
 
 ### Code Cleanup (Drift Removal)
 
-- [ ] **R6.1** Remove WeatherForecast template code from Program.cs
+- [x] **R6.1** Remove WeatherForecast template code from Program.cs
   - **Reason**: Template code not in specs
   - **Files**: `src/Poc.SDD.Api/Program.cs`
 
-- [ ] **R6.2** Remove Class1.cs template files
+- [x] **R6.2** Remove Class1.cs template files
   - **Reason**: Template artifacts not in specs
   - **Files**: `src/Poc.SDD.Domain/Class1.cs`, `src/Poc.SDD.Application/Class1.cs`, `src/Poc.SDD.Infrastructure/Class1.cs`
 
-- [ ] **R6.3** Fix "Blogus" typo to "Bogus" in design.md and tasks.md
+- [x] **R6.3** Fix "Blogus" typo to "Bogus" in design.md and tasks.md
   - **Reason**: Design.md says "Blogus" but Bogus is used (typo)
   - **Files**: `design.md` line 17, `tasks.md` lines 50-54, 58-61
 
 ### Test Fixes & Verification
 
-- [ ] **V1.1** Fix API versioning in test client (CustomWebApplicationFactory)
+- [x] **V1.1** Fix API versioning in test client (CustomWebApplicationFactory)
   - **Issue**: Tests fail with "ApiVersionUnspecified"
   - **Action**: Add `client.DefaultRequestHeaders.Add("api-version", "1.0")` in factory
 
-- [ ] **V1.2** Fix Domain.IntegrationTests project configuration
+- [x] **V1.2** Fix Domain.IntegrationTests project configuration
   - **Issue**: "Solution root could not be located"
   - **Action**: Fix project configuration or WebApplicationFactory setup
 
-- [ ] **V1.3** Run all tests and verify pass
+- [x] **V1.3** Run all tests and verify pass
   - **Target**: All 71 tests passing (currently 3 failing + 1 build error)
   - **Action**: Run `dotnet test` and verify 0 failures
 
-- [ ] **V1.4** Remove template drift code
+- [x] **V1.4** Remove template drift code
   - Remove WeatherForecast endpoints from Program.cs
   - Remove Class1.cs template files from all projects
-  - Fix Blogus → Bogus typo in design.md and tasks.md
+  - Fix Bogus → Bogus typo in design.md and tasks.md
 
 ### Verification
 
-- [ ] **V2.1** Run `dotnet build` - verify no compilation errors
-- [ ] **V2.2** Run `dotnet test` - verify all tests pass (target: 0 failures)
-- [ ] **V2.3** Verify all tasks marked [x] are actually implemented
-- [ ] **V2.4** Update tasks.md to mark remediation tasks as [x] when complete
+- [x] **V2.1** Run `dotnet build` - verify no compilation errors
+- [x] **V2.2** Run `dotnet test` - verify all tests pass (target: 0 failures)
+- [x] **V2.3** Verify all tasks marked [x] are actually implemented
+- [x] **V2.4** Update tasks.md to mark remediation tasks as [x] when complete
