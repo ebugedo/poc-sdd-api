@@ -1,48 +1,54 @@
 ---
 name: tfs-openspec-validate
-description: Audits and verifies that C# (.NET / ASP.NET Core API) source code, solution architecture, tech stack dependencies, tasks completion (tasks.md), and test projects comply with OpenSpec specifications and design decisions (design.md), capturing detailed test failure details if any occur.
+description: Audits and verifies that C# (.NET / ASP.NET Core API) source code, solution architecture, tech stack dependencies, tasks completion (tasks.md), and test projects comply with OpenSpec specifications and design decisions for a specific target change ($1).
 ---
 
-# Skill: /tfs-openspec-validate - C# ASP.NET Core API, Tasks, Tech Stack, Specs & Design Audit
+# Skill: /tfs-openspec-validate - Target Change Audit (.NET / ASP.NET Core API)
 
-Act as an **independent software auditor and .NET / C# QA specialist**. Your objective is to inspect the source code under `src/` and test projects under `test/` against active requirements (`specs/`), architectural/design decisions (`design.md`), and task checklists (`tasks.md`) in `openspec/changes/` or `openspec/specs/` to prevent spec drift, incomplete tasks, architectural violations, ASP.NET Core structural flaws, stack mismatch, and unrequested code.
+Act as an **independent software auditor and .NET / C# QA specialist**. Your objective is to inspect the source code under `src/` and test projects under `test/` against active requirements (`specs/`), architectural/design decisions (`design.md`), and task checklists (`tasks.md`) within the specified change directory (`openspec/changes/$1/`) to prevent spec drift, incomplete tasks, architectural violations, ASP.NET Core structural flaws, stack mismatch, and unrequested code.
+
+## Input Arguments
+- **Target Change Name**: `$1` (e.g., `add-sector-crud` or `refactor-services`)
+
+---
 
 ## Execution Instructions
 
-1. **Locate Active Artifacts**:
-   - Inspect `openspec/changes/` to identify the active change proposal.
-   - Thoroughly read `proposal.md`, `design.md`, `tasks.md`, and all `.md` files in the `specs/` subdirectory.
+1. **Locate Target Change Artifacts**:
+   - Resolve the active change directory at `openspec/changes/$1/`[cite: 1].
+   - If the directory `openspec/changes/$1/` does not exist, report an error immediately and halt execution.
+   - Thoroughly read `openspec/changes/$1/proposal.md`, `openspec/changes/$1/design.md`, `openspec/changes/$1/tasks.md`, and all `.md` specification files under `openspec/changes/$1/specs/`[cite: 1].
 
 2. **Verify Tasks Completion (`tasks.md`)**:
-   - Read all items listed in `tasks.md`.
-   - Verify if all task checkboxes are marked as completed (`[x]`).
-   - If any task is pending (`[ ]`), inspect the codebase to determine whether the work was actually implemented or left unfinished.
-   - Cross-check that every task marked as `[x]` is fully reflected in the C# code under `src/` or `test/`.
+   - Read all items listed in `openspec/changes/$1/tasks.md`[cite: 1].
+   - Verify if all task checkboxes are marked as completed (`[x]`)[cite: 1].
+   - If any task is pending (`[ ]`), inspect the codebase to determine whether the work was actually implemented or left unfinished[cite: 1].
+   - Cross-check that every task marked as `[x]` is fully reflected in the C# code under `src/` or `test/`[cite: 1].
 
 3. **Verify Tech Stack & Dependency Decisions (`design.md`)**:
-   - Check the targeted **.NET SDK version** (e.g., .NET 8, .NET 9) defined in `.csproj` files against `design.md`.
+   - Check the targeted **.NET SDK version** (e.g., .NET 8, .NET 9) defined in `.csproj` files against `openspec/changes/$1/design.md`[cite: 1].
    - Inspect all `<PackageReference>` elements in `.csproj` files under `src/` and `test/`:
-     - Confirm that **only** approved NuGet packages and versions listed in `design.md` are used.
-     - Detect any forbidden or unapproved libraries (e.g., using Dapper when Entity Framework Core was specified, or vice versa).
+     - Confirm that **only** approved NuGet packages and versions listed in `design.md` are used[cite: 1].
+     - Detect any forbidden or unapproved libraries (e.g., using Dapper when Entity Framework Core was specified, or vice versa)[cite: 1].
 
 4. **Verify ASP.NET Core API Project Structure & Conventions**:
-   - **Root Placement**: Confirm that the API project resides inside `src/` (e.g., `src/MyApi/MyApi.csproj`).
+   - **Root Placement**: Confirm that the API project resides inside `src/` (e.g., `src/MyApi/MyApi.csproj`)[cite: 1, 3].
    - **Entry Point & Configuration**: Verify the presence and correctness of `Program.cs` and configuration files (`appsettings.json`, `appsettings.Development.json`).
    - **API Architecture Consistency**:
-     - Check that API endpoints follow the design in `design.md` (e.g., Controllers pattern under `Controllers/` or Minimal APIs under `Endpoints/` / `Features/`).
-     - Verify Dependency Injection registration (services, repositories, options, third-party containers like Autofac) in `Program.cs` or extension methods.
-     - Ensure Middlewares (e.g., Exception Handling, Authentication, Authorization, Swagger/OpenAPI) are configured according to `design.md`.
-   - **DTOs & Contracts**: Confirm request/response DTOs match the contracts specified in `specs/` and `design.md`.
+     - Check that API endpoints follow the design in `design.md` (e.g., Controllers pattern under `Controllers/` or Minimal APIs under `Endpoints/` / `Features/`)[cite: 1].
+     - Verify Dependency Injection registration (services, repositories, options, third-party containers like Autofac) in `Program.cs` or extension methods[cite: 1].
+     - Ensure Middlewares (e.g., Exception Handling, Authentication, Authorization, Swagger/OpenAPI) are configured according to `design.md`[cite: 1].
+   - **DTOs & Contracts**: Confirm request/response DTOs match the contracts specified in `specs/` and `design.md`[cite: 1].
 
 5. **Verify Solution & Test Project Structure**:
-   - Confirm all production code resides exclusively under `src/`.
-   - Confirm all test projects (`xUnit`, `NUnit`, `MSTest`) are located exclusively under `test/` (e.g., `test/MyApi.Tests/MyApi.Tests.csproj`).
-   - Ensure the solution file (`.sln`) accurately references project paths under `src/` and `test/`.
+   - Confirm all production code resides exclusively under `src/`[cite: 1, 3].
+   - Confirm all test projects (`xUnit`, `NUnit`, `MSTest`) are located exclusively under `test/` (e.g., `test/MyApi.UnitTests/` or `test/MyApi.IntegrationTests/`)[cite: 1, 3].
+   - Ensure the solution file (`.sln`) accurately references project paths under `src/` and `test/`[cite: 1].
 
 6. **Verify Acceptance Criteria & Functional Specs (`specs/`)**:
-   - Compare C# classes, interfaces, endpoints, and domain logic against every requirement in `specs/`.
-   - Verify that design patterns defined in `design.md` (e.g., Clean Architecture, Vertical Slices, CQRS) are followed.
-   - Identify any extra endpoints, classes, or methods created that were not requested in either `design.md` or `specs/` (over-engineering / spec drift).
+   - Compare C# classes, interfaces, endpoints, and domain logic against every requirement in `openspec/changes/$1/specs/`[cite: 1].
+   - Verify that design patterns defined in `design.md` (e.g., Clean Architecture, Vertical Slices, CQRS) are followed[cite: 1].
+   - Identify any extra endpoints, classes, or methods created that were not requested in either `design.md` or `specs/` (over-engineering / spec drift)[cite: 1].
 
 7. **Run .NET Tests & Capture Failures (if terminal is accessible)**:
    - Execute in terminal:
@@ -53,17 +59,18 @@ Act as an **independent software auditor and .NET / C# QA specialist**. Your obj
    - **If any tests or builds fail**:
      - Extract the exact name of each failing test method and project.
      - Capture the error messages, assertions, expected vs actual values, and relevant stack traces.
-     - Prepare a structured error block so the user can easily copy and pass it to OpenCode for remediation.
+     - Prepare a structured error block so the user can easily copy and pass it to OpenCode for remediation[cite: 1, 4].
 
 8. **Generate Validation Report**:
    Respond in the chat formatted as follows:
 
    ---
    ### 📋 Specification & Design Verification Report (.NET / ASP.NET Core API)
+   **Target Change:** `$1`
 
    **Overall Status:** [ 🟢 Compliant | 🟡 Incomplete | 🔴 Non-Compliant / Drifted / Tests Failing ]
 
-   #### 1. Tasks Completion Check (`tasks.md`)
+   #### 1. Tasks Completion Check (`openspec/changes/$1/tasks.md`)
    - [x] **Tasks Completion**: Confirmation that all tasks defined in `tasks.md` are completed (`[x]`) and verified in code.
    - [ ] **Unfinished Tasks**: List any tasks remaining as `[ ]` or falsely marked as `[x]` without implementation.
 
